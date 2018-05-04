@@ -4,9 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ltw.coljourney</groupId>
+    <groupId>com.sl.coljourney</groupId>
     <artifactId>col-core</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <scala.library.version>2.11.8</scala.library.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.library.version}</version>
+        </dependency>
+
+    </dependencies>
 
 </project>
