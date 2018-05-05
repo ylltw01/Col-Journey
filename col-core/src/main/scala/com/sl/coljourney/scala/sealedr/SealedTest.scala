@@ -1,4 +1,4 @@
-package com.sl.coljourney.scala.`sealed`
+package com.sl.coljourney.scala.sealedr
 
 /**
   * sealed关键字：可用于修饰trait和class。

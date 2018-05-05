@@ -1,4 +1,4 @@
-package com.sl.coljourney.scala.`sealed`
+package com.sl.coljourney.scala.sealedr
 
 /**
   * Created by L on 2018/5/4.
