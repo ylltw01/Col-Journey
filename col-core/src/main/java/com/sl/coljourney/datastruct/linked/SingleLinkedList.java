@@ -31,7 +31,11 @@ public class SingleLinkedList {
         return true;
     }
 
-    private static class Node {
+    public Node getHead() {
+        return head;
+    }
+
+    static class Node {
         int data;
         Node next;
 
