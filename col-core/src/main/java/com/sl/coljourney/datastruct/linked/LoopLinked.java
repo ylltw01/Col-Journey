@@ -21,7 +21,7 @@ package com.sl.coljourney.datastruct.linked;
  * </p>
  * <p>
  * 问题五：如何判断两个无环链表是否相交？
- * &   问题六：如果两个无环链表相交，求出第一个相交的节点？
+ * *   问题六：如果两个无环链表相交，求出第一个相交的节点？
  * --  可以将其中一个链表首尾相连，然后在判断另外一个链表是否存在环，如果存在环那么表示两个链表相交。
  * --  相交的点就是环的入口点，也就转化为问题二
  * </p>
@@ -68,7 +68,7 @@ public class LoopLinked {
     private static boolean isLoopLinked(SingleLinkedList list) {
         SingleLinkedList.Node slow = list.getHead();
         SingleLinkedList.Node fast = slow;
-        while (slow != null && fast.next != null) {
+        while (slow != null && fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
             if (slow == fast) {
@@ -92,7 +92,7 @@ public class LoopLinked {
     private static SingleLinkedList.Node loopLinkedEnter(SingleLinkedList list) {
         SingleLinkedList.Node slow = list.getHead();
         SingleLinkedList.Node fast = slow;
-        while (slow != null && fast.next != null) {
+        while (slow != null && fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
             if (slow == fast) {
@@ -120,7 +120,7 @@ public class LoopLinked {
     private static int loopLinkedLength(SingleLinkedList list) {
         SingleLinkedList.Node slow = list.getHead();
         SingleLinkedList.Node fast = slow;
-        while (slow != null && fast.next != null) {
+        while (slow != null && fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
             if (slow == fast) {
