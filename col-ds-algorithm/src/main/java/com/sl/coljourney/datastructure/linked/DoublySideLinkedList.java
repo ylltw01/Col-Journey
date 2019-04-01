@@ -1,4 +1,4 @@
-package com.sl.coljourney.datastruct.linked;
+package com.sl.coljourney.datastructure.linked;
 
 /**
  * 双端链表，链表中保存了对最后一个节点的引用

@@ -1,4 +1,4 @@
-package com.sl.coljourney.datastruct.linked;
+package com.sl.coljourney.datastructure.linked;
 
 /**
  * 单链表问题：

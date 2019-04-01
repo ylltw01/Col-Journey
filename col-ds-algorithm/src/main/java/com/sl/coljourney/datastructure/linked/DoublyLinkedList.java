@@ -1,4 +1,4 @@
-package com.sl.coljourney.datastruct.linked;
+package com.sl.coljourney.datastructure.linked;
 
 /**
  * 双向链表：每个节点既保存了下一个节点的引用又保存了上一个节点的引用
