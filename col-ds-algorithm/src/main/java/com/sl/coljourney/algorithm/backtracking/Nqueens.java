@@ -1,53 +1,70 @@
 package com.sl.coljourney.algorithm.backtracking;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 51. N皇后  难度：困难
+ *
+ * @author L
+ */
 public class Nqueens {
 
     public List<List<String>> solveNQueens(int n) {
-        int[] result = new int[8];
-        colQueens(result, 8, 0);
-
-        for (int i : result) {
-            System.out.println(i);
-        }
-
-        return null;
+        int[] queens = new int[n];
+        List<List<String>> result = new ArrayList<>();
+        colQueens(result, queens, n, 0);
+        return result;
     }
 
-    private void colQueens(int[] result, int length, int n) {
-        if (n == 8) {
+    private void colQueens(List<List<String>> result, int[] queens, int n, int row) {
+        if (row == n) {
+            formatResult(result, queens, n);
             return;
         }
-        for (int i = 0; i < length; i++) {
+        for (int column = 0; column < n; column++) {
             // 判断放在该位置是否满足
-            if (isOk(result, i, n)) {
-                result[n] = i;
-                colQueens(result, length, n + 1);
+            if (isOk(queens, column, row)) {
+                queens[row] = column;
+                colQueens(result, queens, n, row + 1);
             }
         }
     }
 
-    private boolean isOk(int[] result, int column, int row) {
+    private void formatResult(List<List<String>> result, int[] queens, int n) {
+        List<String> solution = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            StringBuilder line = new StringBuilder();
+            for (int j = 0; j < n; j++) {
+                if (queens[i] == j) {
+                    line.append("Q");
+                } else {
+                    line.append(".");
+                }
+            }
+            solution.add(line.toString());
+        }
+        result.add(solution);
+    }
+
+    private boolean isOk(int[] queens, int column, int row) {
         int left = column - 1, right = column + 1;
         for (int i = row - 1; i >= 0; i--) {
-            if (result[i] == column) {
+            if (queens[i] == column) {
                 return false;
             }
             if (left >= 0) {
-                if (result[i] == left) {
+                if (queens[i] == left) {
                     return false;
-                } else {
-                    left --;
                 }
             }
-            if (right < result.length) {
-                if (result[i] == right) {
+            if (right < queens.length) {
+                if (queens[i] == right) {
                     return false;
-                } else {
-                    right ++;
                 }
             }
+            left--;
+            right++;
         }
         return true;
     }
@@ -55,7 +72,13 @@ public class Nqueens {
 
     public static void main(String[] args) {
         Nqueens nqueens = new Nqueens();
-        nqueens.solveNQueens(8);
+        List<List<String>> result = nqueens.solveNQueens(4);
+        for (List<String> res : result) {
+            for (String re : res) {
+                System.out.println(re);
+            }
+            System.out.println(" --------------------------------- ");
+        }
     }
 
 }
