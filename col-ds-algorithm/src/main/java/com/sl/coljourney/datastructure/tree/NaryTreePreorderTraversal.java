@@ -38,7 +38,7 @@ public class NaryTreePreorderTraversal {
     }
 
     /**
-     * 非递归使用循环方式实现，借助于队列
+     * 非递归使用循环方式实现，借助于栈
      * @param root 树 root 节点
      * @return 前序遍历结果
      */
