@@ -2,6 +2,62 @@ package com.sl.coljourney.algorithm.sort;
 
 /**
  * 归并排序
+ * <p>
+ * 归并排序使用到了递归，而递归最主要便是能写出其递归的公式
+ * 归并递归公式如下：mergeSort(p, r) = mergeSort(p, q) +  mergeSort(q + 1, r)
+ * 终止条件：p >= r 不用再继续分解
+ * 即先将各数组分解，然后在排序，最后将有序的数组进行merge为一个大的有序的数组
+ * <p>
+ * 伪代码如下：
+ * <p>
+ * // 归并排序算法, A是数组，n表示数组大小
+ * merge_sort(A, n) {
+ * .    merge_sort_c(A, 0, n-1)
+ * }
+ * <p>
+ * // 递归调用函数
+ * merge_sort_c(A, p, r) {
+ * .    // 递归终止条件
+ * .    if p >= r  then return
+ * <p>
+ * .    // 取p到r之间的中间位置q
+ * .    q = (p+r) / 2
+ * .    // 分治递归
+ * .    merge_sort_c(A, p, q)
+ * .    merge_sort_c(A, q+1, r)
+ * <p>
+ * .    // 将A[p...q]和A[q+1...r]合并为A[p...r]
+ * .    merge(A[p...r], A[p...q], A[q+1...r])
+ * }
+ * <p>
+ * <p>
+ * 而 merge 函数作为合并有序的函数，伪代码如下：
+ * .
+ * . merge(A[p...r], A[p...q], A[q+1...r]) {
+ * .    var i := p，j := q+1，k := 0 // 初始化变量i, j, k
+ * .    var tmp := new array[0...r-p] // 申请一个大小跟A[p...r]一样的临时数组
+ * .    while i<=q AND j<=r do {
+ * .        if A[i] <= A[j] {
+ * .            tmp[k++] = A[i++] // i++等于i:=i+1
+ * .        } else {
+ * .            tmp[k++] = A[j++]
+ * .        }
+ * .    }
+ * <p>
+ * .    // 判断哪个子数组中有剩余的数据
+ * .    var start := i，end := q
+ * .    if j<=r then start := j, end:=r
+ * <p>
+ * .    // 将剩余的数据拷贝到临时数组tmp
+ * .    while start <= end do {
+ * .         tmp[k++] = A[start++]
+ * .    }
+ * <p>
+ * .    // 将tmp中的数组拷贝回A[p...r]
+ * .    for i:=0 to r-p do {
+ * .        A[p+i] = tmp[i]
+ * .     }
+ * . }
  *
  * @author L
  */
