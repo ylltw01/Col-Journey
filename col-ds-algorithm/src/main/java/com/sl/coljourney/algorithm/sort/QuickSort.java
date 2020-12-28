@@ -2,6 +2,46 @@ package com.sl.coljourney.algorithm.sort;
 
 /**
  * 快速排序
+ * <p>
+ * 快速排序，递归公式：
+ * .    quickSort(p,r) = quickSort(p, q-1) + quickSort(q+1, r)
+ * 终止条件：
+ * .    p >= r 不用再继续分解
+ * <p>
+ * 伪代码如下：
+ * <p>
+ * // 快速排序，A是数组，n表示数组的大小
+ * quick_sort(A, n) {
+ * .    quick_sort_c(A, 0, n-1)
+ * }
+ * // 快速排序递归函数，p,r为下标
+ * quick_sort_c(A, p, r) {
+ * .    if p >= r then return
+ * <p>
+ * .    // 获取分区点
+ * .    q = partition(A, p, r)
+ * .    quick_sort_c(A, p, q-1)
+ * .    quick_sort_c(A, q+1, r)
+ * }
+ * <p>
+ * partition 中对数组的处理，通过游标i将 A[p,r-1]分为了两部分 A[p, i], A[i -1, r-1]
+ * 其中A[p, i]：表示处理过的区间，A[i -1, r-1]：表示未处理过的区间
+ * 每次处理的时候，都取出A[j] 与选择的A[pivot]进行比较，如果小于A[pivot]，则将其放在 A[i] 的位置，并且 i+1
+ * 最后，交换 A[pivot] 与 A[i] 的位置
+ * <p>
+ * partition 函数伪代码如下：
+ * <p>
+ * partition(A, p, r) {
+ * .    pivot := A[r]
+ * .    i := p
+ * .    for j := p to r-1 do {
+ * .        if A[j] < pivot {
+ * .        swap A[i] with A[j]
+ * .        i := i+1
+ * .        }
+ * .    }
+ * .    swap A[i] with A[r]
+ * .    return i
  *
  * @author L
  */

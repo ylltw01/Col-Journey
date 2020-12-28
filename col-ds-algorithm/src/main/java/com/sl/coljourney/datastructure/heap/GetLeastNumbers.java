@@ -143,8 +143,39 @@ public class GetLeastNumbers {
             return nums;
         }
 
+        quickSort(input, 0, input.length - 1);
 
+        // 取前 k 个
+        for (int i = 0; i < k; i++) {
+            nums.add(input[i]);
+        }
         return nums;
+    }
+
+    private void quickSort(int[] input, int start, int end) {
+        if (start >= end) {
+            return;
+        }
+
+        int pi = partition(input, start, end);
+
+        quickSort(input, start, pi - 1);
+        quickSort(input, pi + 1, end);
+    }
+
+    private int partition(int[] input, int start, int end) {
+        int middle = end;
+        int fristGtMiddle = start;
+        while (start < end) {
+            if (input[start] < input[middle]) {
+                swap(input, start, fristGtMiddle);
+                fristGtMiddle++;
+            }
+            start++;
+        }
+
+        swap(input, middle, fristGtMiddle);
+        return fristGtMiddle;
     }
 
 
@@ -152,7 +183,8 @@ public class GetLeastNumbers {
         int[] arr = {0, 8, 2, 3, 6, 4, 1, 9};
 
         GetLeastNumbers leastNumbers = new GetLeastNumbers();
-        ArrayList<Integer> integers = leastNumbers.mergeSortSolution(arr, 4);
+//        ArrayList<Integer> integers = leastNumbers.mergeSortSolution(arr, 4);
+        ArrayList<Integer> integers = leastNumbers.quickSortSolution(arr, 8);
         System.out.println("length: " + arr.length);
 
         for (int i : integers) {
