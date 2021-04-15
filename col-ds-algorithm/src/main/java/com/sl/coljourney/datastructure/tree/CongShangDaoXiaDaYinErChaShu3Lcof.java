@@ -1,4 +1,4 @@
-package com.sl.coljourney.algorithm.sword;
+package com.sl.coljourney.datastructure.tree;
 
 
 import com.sl.coljourney.datastructure.tree.TreeNode;
