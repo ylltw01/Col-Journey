@@ -1,4 +1,4 @@
-package com.sl.coljourney.algorithm;
+package com.sl.coljourney.datastructure.array;
 
 import java.util.HashMap;
 

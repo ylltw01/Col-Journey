@@ -1,4 +1,4 @@
-package com.sl.coljourney.algorithm;
+package com.sl.coljourney.datastructure.array;
 
 /**
  * 88. 合并两个有序数组 【简单】
