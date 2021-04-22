@@ -3,6 +3,7 @@ package com.sl.coljourney.datastructure.array;
 import java.util.HashMap;
 
 /**
+ * https://leetcode-cn.com/problems/two-sum/submissions/
  * https://www.nowcoder.com/practice/20ef0972485e41019e39543e8e895b7f?tpId=117&tqId=37756&companyId=665&rp=1&ru=%2Fcompany%2Fhome%2Fcode%2F665&qru=%2Fta%2Fjob-code-high%2Fquestion-ranking&tab=answerKey
  * 两数之和
  * <p>
@@ -23,6 +24,9 @@ import java.util.HashMap;
  */
 public class TwoSumArray {
 
+    /**
+     * 牛客，结果索引是从1开始
+     */
     public int[] twoSum(int[] numbers, int target) {
         int[] res = new int[]{-1, -1};
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -35,6 +39,26 @@ public class TwoSumArray {
             if (map.containsKey(two) && i != map.get(two)) {
                 res[0] = Math.min(i + 1, map.get(two) + 1);
                 res[1] = Math.max(i + 1, map.get(two) + 1);
+            }
+        }
+        return res;
+    }
+
+    /**
+     * lettcode，结果索引是从0开始
+     */
+    public int[] twoSum2(int[] numbers, int target) {
+        int[] res = new int[]{-1, -1};
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < numbers.length; i++) {
+            map.put(numbers[i], i);
+        }
+
+        for (int i = 0; i < numbers.length; i++) {
+            int two = target - numbers[i];
+            if (map.containsKey(two) && i != map.get(two)) {
+                res[0] = Math.min(i, map.get(two));
+                res[1] = Math.max(i, map.get(two));
             }
         }
         return res;
