@@ -33,9 +33,11 @@ package com.sl.coljourney.algorithm.dynamicprogramming;
  * exection -> execution (插入 'u')
  * <p>
  * <p>
+ * 官方解法：https://leetcode-cn.com/problems/edit-distance/solution/bian-ji-ju-chi-by-leetcode-solution/
  * <p>
  * 解法：
  * 不匹配时三种操作：1. 添加字符，2. 删除字符，3. 替换字符
+ * 【【注意】】：在解题中，只能修改 word1，只考虑修改 word1 的情况。别考虑其他的，否则，容易想岔。
  * <p>
  * 因此当 a[i] != b[j] 时候，
  * 1. 添加一个字符，添加 b[j] 到 a[i] 位置则考察 a[i+1]，b[j]; 添加 a[i] 到 b[j] 位置则考察 a[i]，b[j+1]
@@ -149,6 +151,44 @@ public class MinEditDistance {
             }
         }
         return dp[word1.length() - 1][word2.length() - 1];
+    }
+
+    /**
+     * 官方解法基于动态规划
+     */
+    public int minDistanceDp2(String word1, String word2) {
+        int wlen1 = word1.length();
+        int wlen2 = word2.length();
+
+        // 只要是有任何一个为空串，则返回另外一个字符串的长度
+        if (wlen1 * wlen2 == 0) {
+            return wlen1 + wlen2;
+        }
+        // 注意，这里初始化的是比两个字符串大 1 的长度
+        int[][] dp = new int[wlen1 + 1][wlen2 + 1];
+
+        // 初始化第一列，此时的第一列相当于是 word2 的空串 （数组长度比字符串长1）与 word1 所有字符比较，那么 D[i][0] 相当于对 word1 执行 i 次删除操作
+        for (int i = 0; i <= wlen1; i++) {
+            dp[i][0] = i;
+        }
+
+        // 初始化第一行，D[0][j] 相当于对 word1 执行 j 次插入操作。
+        for (int j = 0; j <= wlen2; j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 1; i <= wlen1; i++) {
+            for (int j = 1; j <= wlen2; j++) {
+                int left = dp[i - 1][j] + 1;
+                int down = dp[i][j - 1] + 1;
+                int leftDown = dp[i - 1][j - 1];
+                if (word1.charAt(i - 1) != word2.charAt(j - 1)) {
+                    leftDown += 1;
+                }
+                dp[i][j] = Math.min(left, Math.min(down, leftDown));
+            }
+        }
+        return dp[wlen1][wlen2];
     }
 
     /**

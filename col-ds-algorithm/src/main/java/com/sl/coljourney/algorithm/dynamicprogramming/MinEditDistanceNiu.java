@@ -1,47 +1,83 @@
 package com.sl.coljourney.algorithm.dynamicprogramming;
 
 /**
- * 牛客的题，惜字如金，不会解了
+ * https://www.nowcoder.com/practice/05fed41805ae4394ab6607d0d745c8e4?tpId=117&tqId=37801&companyId=665&rp=1&ru=%2Fcompany%2Fhome%2Fcode%2F665&qru=%2Fta%2Fjob-code-high%2Fquestion-ranking&tab=answerKey
+ * 最小编辑代价
+ * 难度：较难
+ * <p>
+ * 题目描述
+ * 给定两个字符串str1和str2，再给定三个整数ic，dc和rc，分别代表插入、删除和替换一个字符的代价，请输出将str1编辑成str2的最小代价。
+ * <p>
+ * 示例1
+ * 输入
+ * "abc","adc",5,3,2
+ * 返回值
+ * 2
+ * <p>
+ * 示例2
+ * 输入
+ * "abc","adc",5,3,100
+ * 返回值
+ * 8
+ * <p>
+ * 题解：
+ * 【【注意】】：在解题中，只能修改 str1，只考虑修改 str1 的情况。别考虑其他的，否则，容易想岔。
+ * 思路参考：leetcode 官方解法：https://leetcode-cn.com/problems/edit-distance/solution/bian-ji-ju-chi-by-leetcode-solution/
+ * <p>
+ * 在初始化数组中：
+ * 1. dp 数组的长度比两个字符串大 1 的长度，这是为了留出一个空字符串与其他字符串比较
+ * 2. 在初始化 dp[i][0] 系列的时候，相当于拿 str2 的空串与 str1 所有字符比较，那么 D[i][0] 相当于对 str1 执行 i 次删除操作
+ * 3. 同理，在初始化 dp[0][j] 系列的时候，相当于拿 str1 的空串与 str2 所有字符比较，那么 D[0][j] 相当于对 str1 执行 j 次插入操作
+ * <p>
+ * 在进行循环赋值的时候：
+ * > 如果 str[i] == str[j], 那么：dp[i][j] = dp[i-1][j-1]
+ * > 如果 str[i] != str[j], 那么就有三种情况：
+ * 【【首先有一个共识】】：此时，dp[i-1][j] 是已经进行过最小编辑次数计算的
+ * 1. dp[i-1][j]：基于以上共识，因此 dp[i][j] 的编辑次数可以是，dp[i-1][j] 将 str1[i] 删除。即 dp[i][j] = dp[i-1][j] + dc。
+ * 2. dp[i][j-1]：基于以上共识，因此 dp[i][j] 的编辑次数可以是，dp[i][j-1] 将 str2[j] 插入到 str1 末尾 。即 dp[i][j] = dp[i][j-1] + ic。
+ * 3. dp[i-1][j-1]：基于以上共识，因此 dp[i][j] 的编辑次数可以是，将 str1 的 str1[i] 替换为 str2[j]。即  dp[i][j] = dp[i-1][j-1] + rc。
+ * 4. 计算以上 3 个表达式的最小值。
  */
 public class MinEditDistanceNiu {
 
     public int minEditCost(String str1, String str2, int ic, int dc, int rc) {
-        int[][] dp = new int[str1.length()][str2.length()];
+        int wlen1 = str1.length();
+        int wlen2 = str2.length();
 
-        // 初始化二维数组的第一列
-        int minDcRc = Math.min(dc, rc);
-        for (int i = 0; i < str1.length(); i++) {
-            if (str1.charAt(i) == str2.charAt(0)) {
-                dp[i][0] = i * minDcRc;
-            } else if (i == 0) {
-                // 第一个字符不相等，只能替换，相当于 a 和 b
-                dp[i][0] = rc;
-            } else {
-                dp[i][0] = dp[i - 1][0] + minDcRc;
-            }
+        // 只要是有任何一个为空串，则返回另外一个字符串的长度
+        if (wlen1 * wlen2 == 0) {
+            return wlen1 + wlen2;
         }
-        // 初始化二维数组的第一行
-        for (int j = 0; j < str2.length(); j++) {
-            if (str2.charAt(j) == str1.charAt(0)) {
-                dp[0][j] = j * minDcRc;
-            } else if (j == 0) {
-                dp[0][j] = rc;
-            } else {
-                dp[0][j] = dp[0][j - 1] + minDcRc;
-            }
+        // 注意，这里初始化的是比两个字符串大 1 的长度
+        int[][] dp = new int[wlen1 + 1][wlen2 + 1];
+
+        // 初始化第一列，此时的第一列相当于是 word2 的空串 （数组长度比字符串长1）与 word1 所有字符比较，那么 D[i][0] 相当于对 word1 执行 i 次删除操作
+        for (int i = 0; i <= wlen1; i++) {
+            dp[i][0] = i * dc;
         }
 
-        int min = Math.min(ic, dc);
-        for (int i = 1; i < dp.length; i++) {
-            for (int j = 1; j < dp[i].length; j++) {
-                if (str1.charAt(i) == str2.charAt(j)) {
-                    dp[i][j] = Math.min(Math.min(dp[i - 1][j] + min, dp[i][j - 1] + min), dp[i - 1][j - 1]);
+        // 初始化第一行，D[0][j] 相当于对 word1 执行 j 次插入操作。
+        for (int j = 0; j <= wlen2; j++) {
+            dp[0][j] = j * ic;
+        }
+
+        for (int i = 1; i <= wlen1; i++) {
+            for (int j = 1; j <= wlen2; j++) {
+                if (str1.charAt(i - 1) != str2.charAt(j - 1)) {
+                    // 相当于对 str1 删除了 str1[i]
+                    int left = dp[i - 1][j] + dc;
+                    // 相当于对 str1 末尾增加一个字符 str2[j]
+                    int down = dp[i][j - 1] + ic;
+                    // 相当于将 str1 的 str1[i] 替换为 str2[j]
+                    int leftDown = dp[i - 1][j - 1] + rc;
+                    dp[i][j] = Math.min(left, Math.min(down, leftDown));
                 } else {
-                    dp[i][j] = Math.min(Math.min(dp[i - 1][j] + min, dp[i][j - 1] + min), dp[i - 1][j - 1] + rc);
+                    // 如果相等，则与 dp[i - 1][j - 1] 一致
+                    dp[i][j] = dp[i - 1][j - 1];
                 }
             }
         }
-        return dp[str1.length() - 1][str2.length() - 1];
+        return dp[wlen1][wlen2];
     }
 
     public int minEditCost2(String str1, String str2, int ic, int dc, int rc) {
@@ -71,62 +107,29 @@ public class MinEditDistanceNiu {
         return dp[m][n];
     }
 
-    public int minEditCost3 (String str1, String str2, int ic, int dc, int rc) {
-        // write code here
-        int[] res = new int[str2.length() + 1];
-        int i, j, minres = Math.min(ic + dc, rc), leftTop, t;
-        char[] c1 = str1.toCharArray(), c2 = str2.toCharArray();
-
-        res[0] = 0;
-
-        for(i = 1; i <= c2.length; i++)
-            res[i] = i * ic;
-
-        for(i = 1;i <= c1.length; i++) {
-            leftTop = res[0];
-            res[0] = i * dc;
-            for(j = 1; j <= c2.length; j++) {
-                t = res[j];
-                if(c1[i-1] == c2[j-1])
-                    res[j] = leftTop;
-                else
-                    res[j] = Math.min(Math.min(res[j] + dc, res[j-1] + ic), leftTop + minres);
-                leftTop = t;
-            }
-        }
-        return res[c2.length];
-    }
-
     public static void main(String[] args) {
         MinEditDistanceNiu distanceNiu = new MinEditDistanceNiu();
-//        int i = distanceNiu.minEditCost("abc", "adc", 5, 3, 2);
-//        int i = distanceNiu.minEditCost("abc","adc",5,3,100);
+//        int i1 = distanceNiu.minEditCost("a", "b", 5, 3, 100);
+//        int i2 = distanceNiu.minEditCost("a", "bc", 5, 3, 100);
+
         int i1 = distanceNiu.minEditCost2("a", "b", 5, 3, 100);
         int i2 = distanceNiu.minEditCost2("a", "bc", 5, 3, 100);
         System.out.println(i1);
         System.out.println(i2);
 
-        int i3 = distanceNiu.minEditCost3("a", "b", 5, 3, 100);
-        int i4 = distanceNiu.minEditCost3("a", "bc", 5, 3, 100);
-        System.out.println(i3);
-        System.out.println(i4);
     }
 
 }
 
 /*
-        r   o   s
-    h   1   2   3
-    o   2
-    r   2
-    s   3
-    e   4
+      0  1
+      #  b
+0  #  0  5
+1  a  3
 
-    i n t e n t i o n
-    e x e c u t i o n
+ (1，1)
 
-    i-1, j-1
-
-    i-1, j (删除j-1)
-    i-1, j (插入一个j-1)
+ (0, 1)
+ (1, 0)
+ (0, 0)
  */
