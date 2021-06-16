@@ -1,6 +1,7 @@
 package com.sl.coljourney.datastructure.linked;
 
 /**
+ * https://www.nowcoder.com/practice/c087914fae584da886a0091e877f2c79?tpId=117&&tqId=37730&&companyId=665&rp=1&ru=/company/home/code/665&qru=/ta/job-code-high/question-ranking
  * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/
  * 83. 删除排序链表中的重复元素
  * 难度：简单
