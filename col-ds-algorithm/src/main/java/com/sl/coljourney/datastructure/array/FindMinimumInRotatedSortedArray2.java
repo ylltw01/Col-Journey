@@ -1,4 +1,4 @@
-package com.sl.coljourney.algorithm.sword;
+package com.sl.coljourney.datastructure.array;
 
 /**
  * https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/submissions/

@@ -1,4 +1,4 @@
-package com.sl.coljourney.algorithm.sword;
+package com.sl.coljourney.datastructure.linked;
 
 import com.sl.coljourney.datastructure.linked.ListNode;
 
