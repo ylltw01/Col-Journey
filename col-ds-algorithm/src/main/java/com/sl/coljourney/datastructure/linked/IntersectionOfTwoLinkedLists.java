@@ -6,6 +6,7 @@ package com.sl.coljourney.datastructure.linked;
  * https://leetcode-cn.com/problems/intersection-of-two-linked-lists/
  * 剑指 Offer 52. 两个链表的第一个公共节点
  * 160. 相交链表
+ * 难度：简单
  * 编写一个程序，找到两个单链表相交的起始节点。
  * <p>
  * 如下面的两个链表：
