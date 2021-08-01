@@ -1,4 +1,4 @@
-package com.sl.coljourney.algorithm;
+package com.sl.coljourney.algorithm.backtracking;
 
 import java.util.ArrayList;
 import java.util.List;
