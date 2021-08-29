@@ -32,34 +32,6 @@ import java.util.List;
  */
 public class Permutations {
 
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-
-        List<Integer> numList = new ArrayList<>();
-        for (int num : nums) {
-            numList.add(num);
-        }
-
-        recursion(ans, numList, 0);
-        return ans;
-    }
-
-    private void recursion(List<List<Integer>> ans, List<Integer> numList, int idx) {
-        if (idx >= numList.size() - 1) {
-            ans.add(numList);
-            return;
-        }
-
-        // 原封不动 1 2 3
-        recursion(ans, numList, idx + 1);
-        for (int i = idx + 1; i < numList.size(); i++) {
-            // 从第二个开始交换，然后递归
-            List<Integer> newNumList = new ArrayList<>(numList);
-            Collections.swap(newNumList, idx, i);
-            recursion(ans, newNumList, idx + 1);
-        }
-    }
-
     /**
      * 官方题解
      */
@@ -88,6 +60,34 @@ public class Permutations {
             backtrack(n, output, res, first + 1);
             // 撤销操作
             Collections.swap(output, first, i);
+        }
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        List<Integer> numList = new ArrayList<>();
+        for (int num : nums) {
+            numList.add(num);
+        }
+
+        recursion(ans, numList, 0);
+        return ans;
+    }
+
+    private void recursion(List<List<Integer>> ans, List<Integer> numList, int idx) {
+        if (idx >= numList.size() - 1) {
+            ans.add(numList);
+            return;
+        }
+
+        // 原封不动 1 2 3
+        recursion(ans, numList, idx + 1);
+        for (int i = idx + 1; i < numList.size(); i++) {
+            // 从第二个开始交换，然后递归
+            List<Integer> newNumList = new ArrayList<>(numList);
+            Collections.swap(newNumList, idx, i);
+            recursion(ans, newNumList, idx + 1);
         }
     }
 
